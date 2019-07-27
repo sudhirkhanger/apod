@@ -15,15 +15,13 @@
  *
  */
 
-package com.sudhirkhanger.apod
+package com.sudhirkhanger.apod.utilities
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class CustomDebugTree : Timber.DebugTree() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun createStackElementTag(element: StackTraceElement): String? {
+        return "(${element.fileName}:${element.lineNumber}) # ${element.methodName}"
     }
 }

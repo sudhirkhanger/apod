@@ -17,13 +17,25 @@
 
 package com.sudhirkhanger.apod
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.app.Application
+import com.facebook.stetho.Stetho
+import com.sudhirkhanger.apod.utilities.CustomDebugTree
+import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class ApodApp : Application() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun onCreate() {
+        super.onCreate()
+        initTimber()
+        initStetho()
+    }
+
+    private fun initTimber() {
+        if (BuildConfig.DEBUG)
+            Timber.plant(CustomDebugTree())
+    }
+
+    private fun initStetho() {
+        Stetho.initializeWithDefaults(this)
     }
 }
