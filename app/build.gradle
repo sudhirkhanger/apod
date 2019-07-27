@@ -51,4 +51,10 @@ dependencies {
     implementation "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+    kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+
+    implementation "androidx.room:room-runtime:$versions.room"
+    kapt "androidx.room:room-compiler:$versions.room"
 }
