@@ -1,5 +1,14 @@
 # Astronomy Picture of the Day
 
+## Build Instructions
+
+Add an NASA Developer API key in `~/.gradle/gradle.properties` (Linux) with variable name `NasaApodDevKey`.
+
+	~/.gradle/gradle.properties
+	NasaApodDevKey="YOUR API KEY"
+	
+## License
+
     Copyright 2019 Sudhir Khanger
 
     Licensed under the Apache License, Version 2.0 (the "License");
