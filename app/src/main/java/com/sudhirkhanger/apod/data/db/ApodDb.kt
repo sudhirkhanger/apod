@@ -20,7 +20,11 @@ package com.sudhirkhanger.apod.data.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
-@Database(entities = [ApodDao::class], version = 1)
+@Database(
+    entities = [ApodEntity::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class ApodDb : RoomDatabase() {
 
     abstract fun ApodDao(): ApodDao

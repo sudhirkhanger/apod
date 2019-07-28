@@ -1,5 +1,6 @@
 package com.sudhirkhanger.apod.data.db
 
+import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -8,8 +9,9 @@ import com.google.gson.annotations.SerializedName
 data class ApodEntity(
 
     @PrimaryKey
+    @NonNull
     @field:SerializedName("date")
-    val date: String? = null,
+    val date: String = "",
 
     @field:SerializedName("copyright")
     val copyright: String? = null,
