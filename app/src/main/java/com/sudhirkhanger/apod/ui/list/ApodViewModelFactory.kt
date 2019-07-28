@@ -15,15 +15,19 @@
  *
  */
 
-package com.sudhirkhanger.apod
+package com.sudhirkhanger.apod.ui.list
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.sudhirkhanger.apod.data.ApodRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MainActivity : AppCompatActivity() {
+@Singleton
+class ApodViewModelFactory @Inject constructor(
+    private val apodRepository: ApodRepository
+) : ViewModelProvider.NewInstanceFactory() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>) = ApodListViewModel(apodRepository) as T
 }

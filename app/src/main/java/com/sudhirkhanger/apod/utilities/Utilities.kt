@@ -15,20 +15,16 @@
  *
  */
 
-package com.sudhirkhanger.apod.di.component
+package com.sudhirkhanger.apod.utilities
 
-import com.sudhirkhanger.apod.ApodApp
-import com.sudhirkhanger.apod.data.ApodRepository
-import com.sudhirkhanger.apod.di.module.RetrofitModule
-import com.sudhirkhanger.apod.di.module.ApodDbModule
-import dagger.Component
-import javax.inject.Singleton
+import java.util.*
 
-@Singleton
-@Component(modules = [RetrofitModule::class, ApodDbModule::class])
-interface AppComponent {
+object Utilities {
 
-    fun getApodRepository(): ApodRepository
-
-    fun inject(app: ApodApp)
+    fun getTodaysDate(): String {
+        val calendar = Calendar.getInstance()
+        return "${calendar.get(Calendar.YEAR)}-" +
+                "${calendar.get(Calendar.MONTH)}-" +
+                "${calendar.get(Calendar.DATE)}"
+    }
 }

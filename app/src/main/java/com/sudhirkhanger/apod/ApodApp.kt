@@ -19,11 +19,18 @@ package com.sudhirkhanger.apod
 
 import android.app.Application
 import com.facebook.stetho.Stetho
+import com.sudhirkhanger.apod.di.component.AppComponent
 import com.sudhirkhanger.apod.di.component.DaggerAppComponent
 import com.sudhirkhanger.apod.utilities.CustomDebugTree
 import timber.log.Timber
 
 class ApodApp : Application() {
+
+    companion object {
+        @JvmStatic
+        lateinit var instance: ApodApp
+            private set
+    }
 
     private val appComponent by lazy {
         DaggerAppComponent
@@ -33,7 +40,7 @@ class ApodApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        appComponent.inject(this)
+        instance = this
         initTimber()
         initStetho()
     }
@@ -46,4 +53,6 @@ class ApodApp : Application() {
     private fun initStetho() {
         Stetho.initializeWithDefaults(this)
     }
+
+    fun getApodAppComponent(): AppComponent = appComponent
 }

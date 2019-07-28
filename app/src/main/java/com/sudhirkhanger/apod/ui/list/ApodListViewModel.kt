@@ -15,20 +15,15 @@
  *
  */
 
-package com.sudhirkhanger.apod.di.component
+package com.sudhirkhanger.apod.ui.list
 
-import com.sudhirkhanger.apod.ApodApp
+import androidx.lifecycle.ViewModel
 import com.sudhirkhanger.apod.data.ApodRepository
-import com.sudhirkhanger.apod.di.module.RetrofitModule
-import com.sudhirkhanger.apod.di.module.ApodDbModule
-import dagger.Component
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [RetrofitModule::class, ApodDbModule::class])
-interface AppComponent {
+class ApodListViewModel @Inject constructor(apodRepository: ApodRepository) : ViewModel() {
 
-    fun getApodRepository(): ApodRepository
-
-    fun inject(app: ApodApp)
+    val apodPicturList = apodRepository.getallPictures()
 }
