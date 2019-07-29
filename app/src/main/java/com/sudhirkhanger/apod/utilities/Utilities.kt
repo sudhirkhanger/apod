@@ -21,10 +21,10 @@ import java.util.*
 
 object Utilities {
 
-    fun getTodaysDate(): String {
+    fun getCurrentDate(): String {
         val calendar = Calendar.getInstance()
         return "${calendar.get(Calendar.YEAR)}-" +
-                "${calendar.get(Calendar.MONTH)}-" +
+                "${calendar.get(Calendar.MONTH) + 1}-" +
                 "${calendar.get(Calendar.DATE)}"
     }
 }

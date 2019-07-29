@@ -43,7 +43,7 @@ class ApodRepository @Inject constructor(
     }
 
     private fun getTodaysPicture() {
-        apodNetworkDataSource.fetchApodData(Utilities.getTodaysDate())
+        apodNetworkDataSource.fetchApodData(Utilities.getCurrentDate())
     }
 
     fun getallPictures(): LiveData<List<ApodEntity>> {
