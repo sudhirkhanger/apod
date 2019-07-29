@@ -17,25 +17,22 @@
 
 package com.sudhirkhanger.apod.di.module
 
-import android.content.Context
-import androidx.room.Room
-import com.sudhirkhanger.apod.data.db.ApodDao
-import com.sudhirkhanger.apod.data.db.ApodDb
-import com.sudhirkhanger.apod.di.qualifier.ApplicationContext
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.sudhirkhanger.apod.di.ViewModelKey
+import com.sudhirkhanger.apod.ui.ViewModelFactory
+import com.sudhirkhanger.apod.ui.list.ApodListViewModel
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import javax.inject.Singleton
+import dagger.multibindings.IntoMap
 
 @Module
-class ApodDbModule {
+abstract class ViewModelModule {
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
-    @Provides
-    @Singleton
-    fun provideApodDb(@ApplicationContext context: Context): ApodDb = Room
-        .databaseBuilder(context, ApodDb::class.java, "apodapp.db")
-        .build()
-
-    @Provides
-    @Singleton
-    fun provideApodDao(apodDb: ApodDb): ApodDao = apodDb.ApodDao()
+    @Binds
+    @IntoMap
+    @ViewModelKey(ApodListViewModel::class)
+    abstract fun apodListViewModel(viewModel: ApodListViewModel): ViewModel
 }

@@ -19,6 +19,7 @@ package com.sudhirkhanger.apod
 
 import android.app.Application
 import com.facebook.stetho.Stetho
+import com.sudhirkhanger.apod.di.module.ContextModule
 import com.sudhirkhanger.apod.di.component.AppComponent
 import com.sudhirkhanger.apod.di.component.DaggerAppComponent
 import com.sudhirkhanger.apod.utilities.CustomDebugTree
@@ -35,12 +36,14 @@ class ApodApp : Application() {
     private val appComponent by lazy {
         DaggerAppComponent
             .builder()
+            .contextModule(ContextModule(this))
             .build()
     }
 
     override fun onCreate() {
         super.onCreate()
         instance = this
+        appComponent.inject(this)
         initTimber()
         initStetho()
     }

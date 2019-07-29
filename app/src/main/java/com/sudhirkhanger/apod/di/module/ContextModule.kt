@@ -15,19 +15,19 @@
  *
  */
 
-package com.sudhirkhanger.apod.ui.list
+package com.sudhirkhanger.apod.di.module
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.sudhirkhanger.apod.data.ApodRepository
-import javax.inject.Inject
+import android.content.Context
+import com.sudhirkhanger.apod.di.qualifier.ApplicationContext
+import dagger.Module
+import dagger.Provides
 import javax.inject.Singleton
 
-@Singleton
-class ApodViewModelFactory @Inject constructor(
-    private val apodRepository: ApodRepository
-) : ViewModelProvider.NewInstanceFactory() {
+@Module
+class ContextModule(private var context: Context) {
 
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>) = ApodListViewModel(apodRepository) as T
+    @Provides
+    @Singleton
+    @ApplicationContext
+    fun provideContext(): Context = context
 }

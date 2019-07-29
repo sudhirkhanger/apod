@@ -24,6 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.sudhirkhanger.apod.ApodApp
 import com.sudhirkhanger.apod.R
@@ -36,8 +37,8 @@ class ApodListFragment : Fragment() {
         fun newInstance() = ApodListFragment()
     }
 
-//    @Inject
-    lateinit var apodViewModelFactory: ApodViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var apodListViewModel: ApodListViewModel
 
@@ -50,13 +51,15 @@ class ApodListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        apodViewModelFactory = ApodViewModelFactory(ApodApp.instance.getApodAppComponent().getApodRepository())
-        apodListViewModel = ViewModelProviders.of(this, apodViewModelFactory)
-            .get(ApodListViewModel::class.java)
+        apodListViewModel = ViewModelProviders.of(this, viewModelFactory)[ApodListViewModel::class.java]
 
         apodListViewModel.apodPicturList.observe(viewLifecycleOwner, Observer {
-            if (it.get(0) != null)
-                Timber.e("apod title ${it.get(0).title}")
+            Timber.e("size %d %s", it.size, it.get(0).title)
         })
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        ApodApp.instance.getApodAppComponent().inject(this)
     }
 }

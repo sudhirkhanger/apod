@@ -18,17 +18,19 @@
 package com.sudhirkhanger.apod.di.component
 
 import com.sudhirkhanger.apod.ApodApp
-import com.sudhirkhanger.apod.data.ApodRepository
-import com.sudhirkhanger.apod.di.module.RetrofitModule
 import com.sudhirkhanger.apod.di.module.ApodDbModule
+import com.sudhirkhanger.apod.di.module.ContextModule
+import com.sudhirkhanger.apod.di.module.RetrofitModule
+import com.sudhirkhanger.apod.di.module.ViewModelModule
+import com.sudhirkhanger.apod.ui.list.ApodListFragment
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [RetrofitModule::class, ApodDbModule::class])
+@Component(
+    modules = [RetrofitModule::class, ApodDbModule::class, ContextModule::class, ViewModelModule::class]
+)
 interface AppComponent {
-
-    fun getApodRepository(): ApodRepository
-
-    fun inject(app: ApodApp)
+    fun inject(apodApp: ApodApp)
+    fun inject(apodListFragment: ApodListFragment)
 }

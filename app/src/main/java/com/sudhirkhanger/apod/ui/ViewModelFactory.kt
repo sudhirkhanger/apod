@@ -15,27 +15,21 @@
  *
  */
 
-package com.sudhirkhanger.apod.di.module
+package com.sudhirkhanger.apod.ui
 
-import android.content.Context
-import androidx.room.Room
-import com.sudhirkhanger.apod.data.db.ApodDao
-import com.sudhirkhanger.apod.data.db.ApodDb
-import com.sudhirkhanger.apod.di.qualifier.ApplicationContext
-import dagger.Module
-import dagger.Provides
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 
-@Module
-class ApodDbModule {
+@Singleton
+class ViewModelFactory @Inject constructor(
+    private val viewModels: MutableMap<Class<out ViewModel>,
+            Provider<ViewModel>>
+) : ViewModelProvider.Factory {
 
-    @Provides
-    @Singleton
-    fun provideApodDb(@ApplicationContext context: Context): ApodDb = Room
-        .databaseBuilder(context, ApodDb::class.java, "apodapp.db")
-        .build()
-
-    @Provides
-    @Singleton
-    fun provideApodDao(apodDb: ApodDb): ApodDao = apodDb.ApodDao()
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T =
+        viewModels[modelClass]?.get() as T
 }
