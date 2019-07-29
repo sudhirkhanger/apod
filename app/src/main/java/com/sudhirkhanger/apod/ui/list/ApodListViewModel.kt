@@ -19,11 +19,17 @@ package com.sudhirkhanger.apod.ui.list
 
 import androidx.lifecycle.ViewModel
 import com.sudhirkhanger.apod.data.ApodRepository
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ApodListViewModel @Inject constructor(apodRepository: ApodRepository) : ViewModel() {
 
-    val apodPicturList = apodRepository.getallPictures()
+    val apodPictureList = apodRepository.getAllPictures()
+
+    override fun onCleared() {
+        super.onCleared()
+        Timber.e("list vm cleared")
+    }
 }

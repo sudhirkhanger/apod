@@ -36,11 +36,13 @@ class ApodNetworkDataSource @Inject constructor(
     fun getApodMutableLiveData() = apodMutableLiveData
 
     fun fetchApodData(date: String) {
+        Timber.e("data fetched for data %s", date)
         val apodService = apodService.getPictureOfTheDay(date)
         apodService.enqueue(object : Callback<ApodEntity> {
             override fun onResponse(call: Call<ApodEntity>, response: Response<ApodEntity>) {
-                if (response.isSuccessful && response.body() != null)
+                if (response.isSuccessful && response.body() != null) {
                     apodMutableLiveData.postValue(response.body())
+                }
             }
 
             override fun onFailure(call: Call<ApodEntity>, t: Throwable) {

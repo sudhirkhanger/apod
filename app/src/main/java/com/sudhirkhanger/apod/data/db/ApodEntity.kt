@@ -4,14 +4,15 @@ import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 @Entity(tableName = "apod")
 data class ApodEntity(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = false)
     @NonNull
     @field:SerializedName("date")
-    val date: String = "",
+    val date: Date? = null,
 
     @field:SerializedName("copyright")
     val copyright: String? = null,

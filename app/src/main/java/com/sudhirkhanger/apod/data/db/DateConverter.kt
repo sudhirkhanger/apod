@@ -17,25 +17,17 @@
 
 package com.sudhirkhanger.apod.data.db
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.TypeConverter
 import java.util.*
 
-@Dao
-interface ApodDao {
+class DateConverter {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
 
-    @Query("SELECT * FROM apod")
-    fun getAllPictures(): LiveData<List<ApodEntity>>
-
-    @Query("SELECT * FROM apod WHERE date = :date")
-    fun getPictureLiveDataByDate(date: Date): LiveData<ApodEntity>
-
-    @Query("SELECT * FROM apod WHERE date = :date")
-    fun getPictureEntityByDate(date: Date): ApodEntity?
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPicture(apodEntity: ApodEntity)
-
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updatePicture(apodEntity: ApodEntity)
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time?.toLong()
+    }
 }

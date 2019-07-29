@@ -46,15 +46,15 @@ class ApodListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val v = inflater.inflate(R.layout.fragment_apod_list, container, false)
-        return v
+        return inflater.inflate(R.layout.fragment_apod_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         apodListViewModel = ViewModelProviders.of(this, viewModelFactory)[ApodListViewModel::class.java]
 
-        apodListViewModel.apodPicturList.observe(viewLifecycleOwner, Observer {
-            Timber.e("size %d %s", it.size, it.get(0).title)
+        apodListViewModel.apodPictureList.observe(viewLifecycleOwner, Observer {
+            for (apodEntity in it)
+                Timber.e("date %s title %s", apodEntity.date, apodEntity.title)
         })
     }
 

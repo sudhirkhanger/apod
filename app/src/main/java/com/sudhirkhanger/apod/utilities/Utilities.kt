@@ -17,6 +17,9 @@
 
 package com.sudhirkhanger.apod.utilities
 
+import timber.log.Timber
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 object Utilities {
@@ -26,5 +29,16 @@ object Utilities {
         return "${calendar.get(Calendar.YEAR)}-" +
                 "${calendar.get(Calendar.MONTH) + 1}-" +
                 "${calendar.get(Calendar.DATE)}"
+    }
+
+    fun convertStringToDate(givenDate: String): Date {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        var date = Date()
+        try {
+            date = format.parse(givenDate)
+        } catch (e: ParseException) {
+            Timber.e(e, "Error in converting date")
+        }
+        return date
     }
 }
