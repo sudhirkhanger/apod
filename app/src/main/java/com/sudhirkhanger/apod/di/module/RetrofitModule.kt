@@ -37,7 +37,8 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideApodService(retrofit: Retrofit) = retrofit.create(ApodService::class.java)
+    fun provideApodService(retrofit: Retrofit): ApodService =
+        retrofit.create(ApodService::class.java)
 
     @Provides
     @Singleton
