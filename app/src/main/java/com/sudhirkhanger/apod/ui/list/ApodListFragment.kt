@@ -26,6 +26,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sudhirkhanger.apod.ApodApp
 import com.sudhirkhanger.apod.R
 import timber.log.Timber
@@ -41,18 +43,31 @@ class ApodListFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var apodListViewModel: ApodListViewModel
+    private lateinit var apodRv: RecyclerView
+    private lateinit var apodListAdapter: ApodListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_apod_list, container, false)
+        val v = inflater.inflate(R.layout.fragment_apod_list, container, false)
+
+        apodRv = v.findViewById(R.id.apod_rv)
+        apodListAdapter = ApodListAdapter()
+        apodRv.apply {
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(v.context, 2)
+            adapter = apodListAdapter
+        }
+
+        return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         apodListViewModel = ViewModelProviders.of(this, viewModelFactory)[ApodListViewModel::class.java]
 
         apodListViewModel.apodPictureList.observe(viewLifecycleOwner, Observer {
+            apodListAdapter.submitList(it)
             for (apodEntity in it)
                 Timber.e("date %s title %s", apodEntity.date, apodEntity.title)
         })

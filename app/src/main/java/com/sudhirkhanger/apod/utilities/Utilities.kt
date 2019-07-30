@@ -41,4 +41,10 @@ object Utilities {
         }
         return date
     }
+
+    fun convertDateFormat(date: Date?): String {
+        if (date == null) return ""
+        val spf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return spf.format(date)
+    }
 }

@@ -41,7 +41,8 @@ class ApodNetworkDataSource @Inject constructor(
         apodService.enqueue(object : Callback<ApodEntity> {
             override fun onResponse(call: Call<ApodEntity>, response: Response<ApodEntity>) {
                 if (response.isSuccessful && response.body() != null) {
-                    apodMutableLiveData.postValue(response.body())
+                    if (response.body()?.mediaType == "image")
+                        apodMutableLiveData.postValue(response.body())
                 }
             }
 
