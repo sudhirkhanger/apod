@@ -22,6 +22,7 @@ import com.sudhirkhanger.apod.di.module.ApodDbModule
 import com.sudhirkhanger.apod.di.module.ContextModule
 import com.sudhirkhanger.apod.di.module.RetrofitModule
 import com.sudhirkhanger.apod.di.module.ViewModelModule
+import com.sudhirkhanger.apod.ui.detail.ApodDetailFragment
 import com.sudhirkhanger.apod.ui.list.ApodListFragment
 import dagger.Component
 import javax.inject.Singleton
@@ -33,4 +34,5 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(apodApp: ApodApp)
     fun inject(apodListFragment: ApodListFragment)
+    fun inject(apodDetailFragment: ApodDetailFragment)
 }

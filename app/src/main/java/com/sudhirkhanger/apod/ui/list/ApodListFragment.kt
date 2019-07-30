@@ -59,9 +59,10 @@ class ApodListFragment : Fragment(), DatePickerSelection {
         apodListAdapter = ApodListAdapter {
             pictureSelectedListener.onPictureSelected(it)
         }
+        val gridLayoutManager = GridLayoutManager(v.context, 2)
         apodRv.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(v.context, 2)
+            layoutManager = gridLayoutManager
             adapter = apodListAdapter
         }
 
@@ -69,7 +70,9 @@ class ApodListFragment : Fragment(), DatePickerSelection {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        apodListViewModel = ViewModelProviders.of(this, viewModelFactory)[ApodListViewModel::class.java]
+        apodListViewModel = activity?.run {
+            ViewModelProviders.of(this, viewModelFactory).get(ApodListViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
 
         apodListViewModel.apodPictureList.observe(viewLifecycleOwner, Observer {
             apodListAdapter.submitList(it)
