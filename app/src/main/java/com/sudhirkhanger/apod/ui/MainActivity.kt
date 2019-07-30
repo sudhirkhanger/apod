@@ -20,9 +20,11 @@ package com.sudhirkhanger.apod.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.sudhirkhanger.apod.R
+import com.sudhirkhanger.apod.ui.detail.ApodDetailFragment
 import com.sudhirkhanger.apod.ui.list.ApodListFragment
+import com.sudhirkhanger.apod.ui.list.OnPictureSelectedListener
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnPictureSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,5 +36,21 @@ class MainActivity : AppCompatActivity() {
             ft.add(R.id.container, ApodListFragment.newInstance())
             ft.commit()
         }
+    }
+
+    override fun onPictureSelected(position: Int) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(
+            android.R.anim.slide_in_left,
+            android.R.anim.slide_out_right,
+            android.R.anim.slide_in_left,
+            android.R.anim.slide_out_right
+        )
+        fragmentTransaction.replace(
+            R.id.container,
+            ApodDetailFragment.newInstance(position)
+        )
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 }

@@ -31,11 +31,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudhirkhanger.apod.ApodApp
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
 class ApodListFragment : Fragment(), DatePickerSelection {
+
 
     companion object {
         fun newInstance() = ApodListFragment()
@@ -47,6 +47,7 @@ class ApodListFragment : Fragment(), DatePickerSelection {
     private lateinit var apodListViewModel: ApodListViewModel
     private lateinit var apodRv: RecyclerView
     private lateinit var apodListAdapter: ApodListAdapter
+    private lateinit var pictureSelectedListener: OnPictureSelectedListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +56,9 @@ class ApodListFragment : Fragment(), DatePickerSelection {
         val v = inflater.inflate(com.sudhirkhanger.apod.R.layout.fragment_apod_list, container, false)
 
         apodRv = v.findViewById(com.sudhirkhanger.apod.R.id.apod_rv)
-        apodListAdapter = ApodListAdapter()
+        apodListAdapter = ApodListAdapter {
+            pictureSelectedListener.onPictureSelected(it)
+        }
         apodRv.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(v.context, 2)
@@ -70,14 +73,18 @@ class ApodListFragment : Fragment(), DatePickerSelection {
 
         apodListViewModel.apodPictureList.observe(viewLifecycleOwner, Observer {
             apodListAdapter.submitList(it)
-            for (apodEntity in it)
-                Timber.e("date %s title %s", apodEntity.date, apodEntity.title)
         })
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         ApodApp.instance.getApodAppComponent().inject(this)
+
+        if (context is OnPictureSelectedListener) {
+            pictureSelectedListener = context
+        } else throw ClassCastException(
+            "$context must implement QuestionItemClickedFragmentInterface"
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -137,4 +144,8 @@ class ApodListFragment : Fragment(), DatePickerSelection {
 
 interface DatePickerSelection {
     fun onDateSelected(date: String)
+}
+
+interface OnPictureSelectedListener {
+    fun onPictureSelected(position: Int)
 }

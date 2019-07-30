@@ -30,7 +30,8 @@ import com.sudhirkhanger.apod.R
 import com.sudhirkhanger.apod.data.db.ApodEntity
 import com.sudhirkhanger.apod.utilities.Utilities
 
-class ApodListAdapter : ListAdapter<ApodEntity, ApodListAdapter.ApodListViewHolder>(ApodEntityDiffCallBack()) {
+class ApodListAdapter(private val onPictureClick: (Int) -> Unit) :
+    ListAdapter<ApodEntity, ApodListAdapter.ApodListViewHolder>(ApodEntityDiffCallBack()) {
 
     class ApodListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val apodIv: ImageView = view.findViewById(R.id.apod_list_iv)
@@ -53,6 +54,7 @@ class ApodListAdapter : ListAdapter<ApodEntity, ApodListAdapter.ApodListViewHold
                     .fit()
                     .into(this.apodIv)
                 apodTv.text = Utilities.convertDateFormat(apodEntity.date)
+                itemView.setOnClickListener { onPictureClick(position) }
             }
         }
     }
