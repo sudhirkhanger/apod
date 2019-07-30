@@ -1,0 +1,62 @@
+[1mdiff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml[m
+[1mindex c787342..c6e20d2 100644[m
+[1m--- a/app/src/main/AndroidManifest.xml[m
+[1m+++ b/app/src/main/AndroidManifest.xml[m
+[36m@@ -12,7 +12,7 @@[m
+             android:label="@string/app_name"[m
+             android:roundIcon="@mipmap/ic_launcher_round"[m
+             android:supportsRtl="true"[m
+[31m-            android:theme="@style/AppTheme.NoActionBar">[m
+[32m+[m[32m            android:theme="@style/AppTheme">[m
+         <activity android:name=".ui.MainActivity">[m
+             <intent-filter>[m
+                 <action android:name="android.intent.action.MAIN"/>[m
+[1mdiff --git a/app/src/main/res/layout/fragment_apod_list.xml b/app/src/main/res/layout/fragment_apod_list.xml[m
+[1mindex 99f4ac1..98ba605 100644[m
+[1m--- a/app/src/main/res/layout/fragment_apod_list.xml[m
+[1m+++ b/app/src/main/res/layout/fragment_apod_list.xml[m
+[36m@@ -16,12 +16,21 @@[m
+   ~[m
+   -->[m
+ [m
+[31m-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"[m
+[31m-             xmlns:tools="http://schemas.android.com/tools"[m
+[31m-             android:layout_width="match_parent"[m
+[31m-             android:layout_height="match_parent"[m
+[31m-             tools:context=".ui.list.ApodListFragment">[m
+[32m+[m
+[32m+[m[32m<androidx.constraintlayout.widget.ConstraintLayout[m
+[32m+[m[32m        xmlns:android="http://schemas.android.com/apk/res/android"[m
+[32m+[m[32m        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"[m
+[32m+[m[32m        tools:context=".ui.list.ApodListFragment"[m
+[32m+[m[32m        android:layout_width="match_parent"[m
+[32m+[m[32m        android:layout_height="match_parent">[m
+[32m+[m
+     <androidx.recyclerview.widget.RecyclerView[m
+             android:layout_width="match_parent"[m
+[31m-            android:layout_height="match_parent" android:id="@+id/apod_rv"/>[m
+[31m-</FrameLayout>[m
+\ No newline at end of file[m
+[32m+[m[32m            android:layout_height="match_parent"[m
+[32m+[m[32m            android:id="@+id/apod_rv"[m
+[32m+[m[32m            app:layout_constraintStart_toStartOf="parent"[m
+[32m+[m[32m            app:layout_constraintTop_toTopOf="parent"[m
+[32m+[m[32m            app:layout_constraintEnd_toEndOf="parent"[m
+[32m+[m[32m            app:layout_constraintBottom_toBottomOf="parent">[m
+[32m+[m[32m    </androidx.recyclerview.widget.RecyclerView>[m
+[32m+[m[32m</androidx.constraintlayout.widget.ConstraintLayout>[m
+\ No newline at end of file[m
+[1mdiff --git a/app/src/main/res/values/styles.xml b/app/src/main/res/values/styles.xml[m
+[1mindex d3e3d94..e5448bf 100644[m
+[1m--- a/app/src/main/res/values/styles.xml[m
+[1m+++ b/app/src/main/res/values/styles.xml[m
+[36m@@ -7,9 +7,4 @@[m
+         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>[m
+         <item name="colorAccent">@color/colorAccent</item>[m
+     </style>[m
+[31m-[m
+[31m-    <style name="AppTheme.NoActionBar">[m
+[31m-        <item name="windowActionBar">false</item>[m
+[31m-        <item name="windowNoTitle">true</item>[m
+[31m-    </style>[m
+ </resources>[m

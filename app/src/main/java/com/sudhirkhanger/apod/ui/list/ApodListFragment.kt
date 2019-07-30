@@ -17,11 +17,13 @@
 
 package com.sudhirkhanger.apod.ui.list
 
+import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.DatePicker
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -29,11 +31,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudhirkhanger.apod.ApodApp
-import com.sudhirkhanger.apod.R
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
-class ApodListFragment : Fragment() {
+class ApodListFragment : Fragment(), DatePickerSelection {
 
     companion object {
         fun newInstance() = ApodListFragment()
@@ -50,9 +52,9 @@ class ApodListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val v = inflater.inflate(R.layout.fragment_apod_list, container, false)
+        val v = inflater.inflate(com.sudhirkhanger.apod.R.layout.fragment_apod_list, container, false)
 
-        apodRv = v.findViewById(R.id.apod_rv)
+        apodRv = v.findViewById(com.sudhirkhanger.apod.R.id.apod_rv)
         apodListAdapter = ApodListAdapter()
         apodRv.apply {
             setHasFixedSize(true)
@@ -77,4 +79,62 @@ class ApodListFragment : Fragment() {
         super.onAttach(context)
         ApodApp.instance.getApodAppComponent().inject(this)
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(com.sudhirkhanger.apod.R.menu.list_frag_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            com.sudhirkhanger.apod.R.id.action_pick_date -> {
+                val newFragment = DatePickerFragment()
+                newFragment.setTargetFragment(this, 100)
+                newFragment.show(fragmentManager, "datePicker")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onDateSelected(date: String) {
+        apodListViewModel.fetchPictureByDate(date)
+    }
+
+    class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
+
+        private lateinit var dateSelectionListener: DatePickerSelection
+
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            dateSelectionListener = targetFragment as DatePickerSelection
+        }
+
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+            // Use the current date as the default date in the picker
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(requireContext(), this, year, month, day)
+            datePickerDialog.datePicker.maxDate = c.timeInMillis
+            return datePickerDialog
+        }
+
+        override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+            // Do something with the date chosen by the user
+            dateSelectionListener.onDateSelected("$year-${month + 1}-$day")
+        }
+    }
+}
+
+interface DatePickerSelection {
+    fun onDateSelected(date: String)
 }

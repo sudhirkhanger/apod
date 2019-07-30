@@ -23,6 +23,7 @@ import com.sudhirkhanger.apod.data.db.ApodEntity
 import com.sudhirkhanger.apod.data.network.ApodNetworkDataSource
 import com.sudhirkhanger.apod.utilities.AppExecutors
 import com.sudhirkhanger.apod.utilities.Utilities
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,7 +35,7 @@ class ApodRepository @Inject constructor(
 ) {
 
     init {
-        if (!isCurrentDatePictureAvailable()) fetchCurrentDatePicture()
+        if (isCurrentDatePictureAvailable()) fetchCurrentDatePicture(Utilities.getCurrentDate())
         val apodLiveData = apodNetworkDataSource.getApodMutableLiveData()
         apodLiveData.observeForever {
             executors.diskIO().execute {
@@ -43,8 +44,8 @@ class ApodRepository @Inject constructor(
         }
     }
 
-    private fun fetchCurrentDatePicture() {
-        apodNetworkDataSource.fetchApodData(Utilities.getCurrentDate())
+    fun fetchCurrentDatePicture(date: String) {
+        apodNetworkDataSource.fetchApodData(date)
     }
 
     fun getAllPictures(): LiveData<List<ApodEntity>> {
@@ -61,6 +62,7 @@ class ApodRepository @Inject constructor(
             )
             shouldFetch = apodEntity != null
         }
+        Timber.e("should fetch %s", shouldFetch)
         return shouldFetch
     }
 }
