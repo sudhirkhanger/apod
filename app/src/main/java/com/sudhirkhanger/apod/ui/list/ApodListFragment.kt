@@ -69,6 +69,11 @@ class ApodListFragment : Fragment(), DatePickerSelection {
         return v
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        apodRv.adapter = null
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         apodListViewModel = activity?.run {
             ViewModelProviders.of(this, viewModelFactory).get(ApodListViewModel::class.java)
