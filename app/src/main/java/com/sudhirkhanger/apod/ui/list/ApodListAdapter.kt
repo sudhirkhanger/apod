@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -61,15 +60,5 @@ class ApodListAdapter(private val onPictureClick: (Int) -> Unit) :
                 itemView.setOnClickListener { onPictureClick(position) }
             }
         }
-    }
-}
-
-private class ApodEntityDiffCallBack : DiffUtil.ItemCallback<ApodEntity>() {
-    override fun areItemsTheSame(oldItem: ApodEntity, newItem: ApodEntity): Boolean {
-        return oldItem.date == newItem.date
-    }
-
-    override fun areContentsTheSame(oldItem: ApodEntity, newItem: ApodEntity): Boolean {
-        return oldItem == newItem
     }
 }

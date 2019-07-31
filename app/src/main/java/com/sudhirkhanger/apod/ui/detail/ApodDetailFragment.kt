@@ -45,23 +45,21 @@ class ApodDetailFragment : Fragment() {
         }
     }
 
-    private var position = 0
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var apodListViewModel: ApodListViewModel
     private lateinit var viewPager: ViewPager
-    private lateinit var picturePageAdapter: PicturePageAdapter
-
+    private lateinit var apodStatePagerAdapter: ApodStatePagerAdapter;
+    private var position = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_apod_detail, container, false)
         initView(v)
-        initialize(v)
+        initialize()
         return v
     }
 
@@ -69,10 +67,10 @@ class ApodDetailFragment : Fragment() {
         viewPager = view.findViewById(R.id.viewpager)
     }
 
-    private fun initialize(view: View) {
+    private fun initialize() {
         position = arguments?.getInt(PICTURE_POS) ?: 0
-        picturePageAdapter = PicturePageAdapter()
-        viewPager.adapter = picturePageAdapter
+        apodStatePagerAdapter = ApodStatePagerAdapter(childFragmentManager, mutableListOf())
+        viewPager.adapter = apodStatePagerAdapter
     }
 
     override fun onAttach(context: Context?) {
@@ -87,7 +85,7 @@ class ApodDetailFragment : Fragment() {
 
         apodListViewModel.apodPictureList.observe(viewLifecycleOwner, Observer {
             for (apodEntity in it) Timber.e("${apodEntity.date}")
-            picturePageAdapter.setPictureData(it)
+            apodStatePagerAdapter.setPictureData(it)
             viewPager.currentItem = position
         })
     }

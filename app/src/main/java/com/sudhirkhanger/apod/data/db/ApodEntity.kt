@@ -1,11 +1,14 @@
 package com.sudhirkhanger.apod.data.db
 
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
+@Parcelize
 @Entity(tableName = "apod")
 data class ApodEntity(
 
@@ -34,4 +37,4 @@ data class ApodEntity(
 
     @field:SerializedName("url")
     val url: String? = null
-)
+) : Parcelable

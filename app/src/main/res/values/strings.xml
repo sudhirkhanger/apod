@@ -2,4 +2,6 @@
     <string name="app_name">APOD</string>
     <string name="apod_cd">picture of the day</string>
     <string name="pick_a_date">Pick a date</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>

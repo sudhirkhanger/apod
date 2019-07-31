@@ -144,11 +144,3 @@ class ApodListFragment : Fragment(), DatePickerSelection {
         }
     }
 }
-
-interface DatePickerSelection {
-    fun onDateSelected(date: String)
-}
-
-interface OnPictureSelectedListener {
-    fun onPictureSelected(position: Int)
-}
