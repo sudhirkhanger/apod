@@ -37,6 +37,7 @@ class ApodDetailFragment : Fragment() {
 
     companion object {
         private const val PICTURE_POS = "picture_pos"
+        private const val SAVE_VIEWPAGER_ITEM_POS = "save_vp_item_pos"
 
         fun newInstance(pos: Int) = ApodDetailFragment().apply {
             arguments = Bundle().apply {
@@ -88,5 +89,20 @@ class ApodDetailFragment : Fragment() {
             apodStatePagerAdapter.setPictureData(it)
             viewPager.currentItem = position
         })
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            position = savedInstanceState.getInt(SAVE_VIEWPAGER_ITEM_POS)
+            Timber.e("savedInstanceState %d", position)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.e("outState %d", viewPager.currentItem)
+        outState.putInt(SAVE_VIEWPAGER_ITEM_POS, viewPager.currentItem)
     }
 }
