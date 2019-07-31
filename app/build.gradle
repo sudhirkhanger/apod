@@ -67,6 +67,5 @@ dependencies {
 
     implementation "com.squareup.picasso:picasso:$versions.picasso"
 
-//    implementation "com.github.chrisbanes.photoview.PhotoView:$versions.photoview"
     implementation "com.github.chrisbanes:PhotoView:$versions.photoview"
 }
