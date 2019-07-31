@@ -23,7 +23,6 @@ import com.sudhirkhanger.apod.data.db.ApodEntity
 import com.sudhirkhanger.apod.data.network.ApodNetworkDataSource
 import com.sudhirkhanger.apod.utilities.AppExecutors
 import com.sudhirkhanger.apod.utilities.Utilities
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,11 +33,8 @@ class ApodRepository @Inject constructor(
     private val apodNetworkDataSource: ApodNetworkDataSource,
     private val executors: AppExecutors
 ) {
-
     init {
-        if (isCurrentDatePictureAvailable()) fetchCurrentDatePicture(
-            Utilities.getCurrentDate(Calendar.getInstance())
-        )
+        fetchCurrentDatePicture()
         val apodLiveData = apodNetworkDataSource.getApodMutableLiveData()
         apodLiveData.observeForever {
             executors.diskIO().execute {
@@ -55,17 +51,21 @@ class ApodRepository @Inject constructor(
         return apodDao.getAllPictures()
     }
 
-    private fun isCurrentDatePictureAvailable(): Boolean {
-        var shouldFetch = true
+    private fun fetchCurrentDatePicture() {
         executors.diskIO().execute {
             val apodEntity = apodDao.getPictureEntityByDate(
                 Utilities.convertStringToDate(
-                    Utilities.getCurrentDate(Calendar.getInstance())
+                    Utilities.getCurrentDate(
+                        Calendar.getInstance()
+                    )
                 )
             )
-            shouldFetch = apodEntity != null
+            if (apodEntity == null)
+                fetchCurrentDatePicture(
+                    Utilities.getCurrentDate(
+                        Calendar.getInstance()
+                    )
+                )
         }
-        Timber.e("should fetch %s", shouldFetch)
-        return shouldFetch
     }
 }
