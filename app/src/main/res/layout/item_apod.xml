@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:contentDescription="@string/apod_cd"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
             android:ellipsize="end"

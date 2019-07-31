@@ -18,6 +18,5 @@
 
 <resources>
     <dimen name="iv_height">200dp</dimen>
-    <dimen name="tv_height">56dp</dimen>
     <dimen name="dimen_8dp">8dp</dimen>
 </resources>

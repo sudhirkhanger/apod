@@ -17,8 +17,8 @@ buildscript {
             recyclerView    : '1.0.0',
             debugDb         : '1.0.6',
             picasso         : '2.71828',
-            legacySupport   : '1.0.0'
-
+            legacySupport   : '1.0.0',
+            photoview       : '2.0.0'
     ]
     repositories {
         google()
@@ -37,7 +37,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-
+        maven { url "https://jitpack.io" }
     }
 }
 

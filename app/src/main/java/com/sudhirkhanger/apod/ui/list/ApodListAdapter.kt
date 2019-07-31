@@ -47,12 +47,16 @@ class ApodListAdapter(private val onPictureClick: (Int) -> Unit) :
     override fun onBindViewHolder(holder: ApodListViewHolder, position: Int) {
         getItem(position).let { apodEntity ->
             with(holder) {
+
                 Picasso.get()
                     .load(apodEntity.hdurl)
-                    .placeholder(holder.itemView.resources.getDrawable(R.drawable.ic_image_black_24dp, null))
-                    .error(holder.itemView.resources.getDrawable(R.drawable.ic_broken_image_black_24dp, null))
                     .fit()
+                    .centerCrop()
+                    .noFade()
+                    .placeholder(holder.itemView.resources.getDrawable(R.drawable.ic_image_white_24dp, null))
+                    .error(holder.itemView.resources.getDrawable(R.drawable.ic_broken_image_white_24dp, null))
                     .into(this.apodIv)
+
                 apodTv.text = Utilities.convertDateFormat(apodEntity.date)
                 itemView.setOnClickListener { onPictureClick(position) }
             }

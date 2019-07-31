@@ -22,7 +22,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.github.chrisbanes.photoview.PhotoView
 import com.squareup.picasso.Picasso
+import com.sudhirkhanger.apod.R
 import com.sudhirkhanger.apod.data.db.ApodEntity
 
 class PicturePageAdapter : PagerAdapter() {
@@ -39,8 +41,19 @@ class PicturePageAdapter : PagerAdapter() {
     override fun getCount(): Int = pictureList.size
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val imageView = ImageView(container.context)
-        Picasso.get().load(pictureList[position].hdurl).fit().into(imageView)
+        val imageView = PhotoView(container.context)
+        imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        imageView.background = container.resources.getDrawable(android.R.color.black, null)
+
+        Picasso
+            .get()
+            .load(pictureList[position].hdurl)
+            .fit()
+            .centerInside()
+            .noFade()
+            .placeholder(container.resources.getDrawable(R.drawable.ic_image_white_24dp, null))
+            .error(container.resources.getDrawable(R.drawable.ic_broken_image_white_24dp, null))
+            .into(imageView)
 
         (container as ViewPager).addView(
             imageView,
@@ -51,6 +64,6 @@ class PicturePageAdapter : PagerAdapter() {
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, viewObject: Any) {
-        (container as ViewPager).removeView(viewObject as ImageView)
+        (container as ViewPager).removeView(viewObject as PhotoView)
     }
 }
