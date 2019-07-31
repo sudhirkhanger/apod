@@ -7,6 +7,10 @@ Add an NASA Developer API key in `~/.gradle/gradle.properties` (Linux) with vari
 	~/.gradle/gradle.properties
 	NasaApodDevKey="YOUR API KEY"
 	
+## Notes
+
+ * The calendar button, intentionally, re-downloads the day's data for testing.
+	
 ## License
 
     Copyright 2019 Sudhir Khanger
