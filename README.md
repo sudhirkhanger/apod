@@ -22,7 +22,9 @@ Add an NASA Developer API key in `~/.gradle/gradle.properties` (Linux) with vari
 
 <img src="https://raw.githubusercontent.com/sudhirkhanger/apod/master/art/device-2019-08-01-093128.png" width="50%"><img src="https://raw.githubusercontent.com/sudhirkhanger/apod/master/art/device-2019-08-01-093215.png" width="50%">
 
-<img src="https://raw.githubusercontent.com/sudhirkhanger/apod/master/art/device-2019-08-01-093630.png" width="50%">
+<p align="center">
+<img src="https://raw.githubusercontent.com/sudhirkhanger/apod/master/art/device-2019-08-01-093630.png">
+</p>
 	
 ## License
 
