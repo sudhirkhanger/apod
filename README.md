@@ -9,9 +9,12 @@ Add an NASA Developer API key in `~/.gradle/gradle.properties` (Linux) with vari
 	
 ## Notes
 
+ * Unsuccessful responses like errors are discarded for now. For example, the app will allow you 
+   to select current date but it may not have an entry in the Apod database and this result would
+   be discarded for now.
  * When the app is started the data for the current date is downloaded automatically once a day.
  * I have decided not to download data which contains videos instead of an image. Some days may
-   have videos which will not be saved in the database for the purpose of assignment.
+   have videos which will not be saved in the database.
  * The calendar button will always re-download the data for the requested date. It is an 
    intentional feature.
 	

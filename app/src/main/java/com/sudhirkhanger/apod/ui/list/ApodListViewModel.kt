@@ -24,14 +24,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ApodListViewModel @Inject constructor(val apodRepository: ApodRepository) : ViewModel() {
+class ApodListViewModel @Inject constructor(private val apodRepository: ApodRepository) : ViewModel() {
 
     val apodPictureList = apodRepository.getAllPictures()
 
-    fun fetchPictureByDate(date: String) = apodRepository.fetchCurrentDatePicture(date)
-
-    override fun onCleared() {
-        super.onCleared()
-        Timber.e("list vm cleared")
-    }
+    fun fetchPictureByDate(date: String) = apodRepository.fetchPictureByDate(date)
 }

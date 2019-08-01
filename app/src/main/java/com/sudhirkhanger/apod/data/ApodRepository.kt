@@ -34,7 +34,7 @@ class ApodRepository @Inject constructor(
     private val executors: AppExecutors
 ) {
     init {
-        fetchCurrentDatePicture()
+        fetchPictureByDate()
         val apodLiveData = apodNetworkDataSource.getApodMutableLiveData()
         apodLiveData.observeForever {
             executors.diskIO().execute {
@@ -43,7 +43,7 @@ class ApodRepository @Inject constructor(
         }
     }
 
-    fun fetchCurrentDatePicture(date: String) {
+    fun fetchPictureByDate(date: String) {
         apodNetworkDataSource.fetchApodData(date)
     }
 
@@ -51,21 +51,13 @@ class ApodRepository @Inject constructor(
         return apodDao.getAllPictures()
     }
 
-    private fun fetchCurrentDatePicture() {
+    private fun fetchPictureByDate() {
+        val cal = Calendar.getInstance()
         executors.diskIO().execute {
             val apodEntity = apodDao.getPictureEntityByDate(
-                Utilities.convertStringToDate(
-                    Utilities.getCurrentDate(
-                        Calendar.getInstance()
-                    )
-                )
+                Utilities.convertStringToDate(Utilities.getCurrentDate(cal))
             )
-            if (apodEntity == null)
-                fetchCurrentDatePicture(
-                    Utilities.getCurrentDate(
-                        Calendar.getInstance()
-                    )
-                )
+            if (apodEntity == null) fetchPictureByDate(Utilities.getCurrentDate(cal))
         }
     }
 }

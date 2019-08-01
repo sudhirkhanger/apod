@@ -46,7 +46,6 @@ class ApodDetailFragment : Fragment() {
         }
     }
 
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var apodListViewModel: ApodListViewModel
