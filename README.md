@@ -17,6 +17,12 @@ Add an NASA Developer API key in `~/.gradle/gradle.properties` (Linux) with vari
    have videos which will not be saved in the database.
  * The calendar button will always re-download the data for the requested date. It is an 
    intentional feature.
+
+## Screenshots
+
+<img src="https://raw.githubusercontent.com/sudhirkhanger/apod/master/art/device-2019-08-01-093128.png" width="50%"><img src="https://raw.githubusercontent.com/sudhirkhanger/apod/master/art/device-2019-08-01-093215.png" width="50%">
+
+<img src="https://raw.githubusercontent.com/sudhirkhanger/apod/master/art/device-2019-08-01-093630.png" width="50%">
 	
 ## License
 
